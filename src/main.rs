@@ -1,16 +1,29 @@
 use std::io;
 
 struct PrioData {
-    lists: Vec<PrioItem>,
+    lists: Vec<PrioList>,
 }
-struct PrioItem {
+
+struct PrioList {
     name: String,
     items: Vec<String>,
+}
+impl PrioList {
+    fn new(name: &str, items: Vec<String>) -> PrioList {
+        PrioList {
+            name: name.to_string(),
+            items: items.clone(),
+        }
+    }
+
+    fn add_item(&mut self, new_item: &str) {
+        self.items.push(new_item.to_string());
+    }
 }
 
 fn main() {
     let mut data = PrioData {
-        lists: vec![PrioItem {name: "High".to_string(), items: vec!["something".to_string(), "something else".to_string()]}]
+        lists: vec![PrioList::new("High", vec!["something".to_string(), "something else".to_string()])]
     };
 
     loop {
@@ -63,8 +76,10 @@ fn view_list(list_index: usize, data: &PrioData) {
 
     for item in &list.items {
         println!("{}", item);
+
+
     }
-    
+
 }
 
 fn create_priority_list(data: &PrioData) {
